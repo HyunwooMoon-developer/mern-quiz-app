@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { addExam, getExam, updateExam } from '../../../services/exam';
-import { deleteQuestion } from '../../../services/question';
 import ExamForm from '../../../components/ExamForm';
 import { ExamType } from '../../../types/types';
+import QuestionTable from '../../../components/QuestionTable';
 
 const SetExam = () => {
   const [exam, setExam] = useState<ExamType>({
@@ -14,8 +14,8 @@ const SetExam = () => {
     duration: 0,
     total: 0,
     correct: 0,
+    questions: [],
   });
-  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -48,20 +48,6 @@ const SetExam = () => {
 
       if (res.success) {
         navigate('/admin/exam');
-      } else {
-        console.log(res.message);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onDeleteQuestion = async (question: any) => {
-    try {
-      const res = await deleteQuestion(question);
-
-      if (res.success) {
-        getExistExam();
       } else {
         console.log(res.message);
       }
@@ -104,7 +90,7 @@ const SetExam = () => {
           </Tab>
           {params.id ? (
             <Tab title="Questions" eventKey="question">
-              question
+              <QuestionTable exam={exam} getExistExam={getExistExam} />
             </Tab>
           ) : null}
         </Tabs>

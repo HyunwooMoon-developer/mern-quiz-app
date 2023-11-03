@@ -24,4 +24,17 @@ export type ExamType = {
   duration: number;
   total: number;
   correct: number;
+  questions: QuestionType[];
+};
+
+export type QuestionType = {
+  _id?: string;
+  name: string;
+  options: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
+  };
+  correctOption: 'A' | 'B' | 'C' | 'D' | null;
 };

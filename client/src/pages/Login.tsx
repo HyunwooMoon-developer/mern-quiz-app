@@ -15,7 +15,7 @@ const Login = () => {
     try {
       e.preventDefault();
       const res = await login(userInfo);
-
+      console.log(res);
       if (res.success) {
         localStorage.setItem('quizToken', res.data);
         window.location.href = '/';
