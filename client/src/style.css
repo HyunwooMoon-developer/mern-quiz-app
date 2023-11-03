@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+}
+
+/* Form */
+.user-form {
+  width: 50%;
+  margin: 15% 0% 0% 25%;
+  background-color: white;
+  text-align: center;
+}
+
+.user-form-input {
+  width: 70%;
+}
+
+.background-img {
+  background-image: url('../public/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .user-form {
+    width: 100%;
+    margin: 25% 0% 0% 0%;
+  }
+
+  .user-form-input {
+    width: 100%;
+  }
+}
+
+/* Nav */
+
+.navbar {
+  position: fixed !important;
+  transition: all 0.3s ease-out 0s !important;
+  padding: 1rem 2rem !important;
+  font-size: 1.3rem !important;
+}
+
+.navbar-nav .nav-link {
+  color: black !important;
+  padding-left: 2rem !important;
+}
+
+@media (max-width: 767px) {
+  .navbar-toggler {
+    position: fixed !important;
+    top: 25px;
+  }
+}
+/* Home */
+
+.card-size {
+  height: 350px;
+}
+
+.exam-button {
+  width: 60%;
+  margin-left: 20%;
+}
+
+@media (max-width: 767px) {
+  .exam-button {
+    width: 100%;
+    margin-left: 0%;
+  }
+}
+
+/* Exam */
