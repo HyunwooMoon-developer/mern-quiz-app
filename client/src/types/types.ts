@@ -15,6 +15,7 @@ export type UserType = {
   email: string;
   fname: string;
   lname: string;
+  isAdmin: boolean;
 };
 
 export type ExamType = {
@@ -37,4 +38,5 @@ export type QuestionType = {
     D: string;
   };
   correctOption: 'A' | 'B' | 'C' | 'D' | null;
+  exam?: string;
 };

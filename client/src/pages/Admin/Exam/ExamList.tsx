@@ -134,44 +134,49 @@ const ExamList = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {exams.map((exam, index) => (
-                <tr key={exam._id}>
-                  <td>{index + 1}</td>
-                  <td>{exam.name}</td>
-                  <td>{exam.category}</td>
-                  <td>{exam.total}</td>
-                  <td>{exam.correct}</td>
-                  <td>{exam.duration}</td>
-                  <td>
-                    {exam._id ? (
-                      <Row>
-                        <Col lg="2">
-                          <Button
-                            variant="outline-primary"
-                            onClick={() => navigate(`edit/${exam._id}`)}
-                            size="sm"
-                          >
-                            <AiFillEdit />
-                          </Button>
-                        </Col>
-                        <Col>
-                          <Button
-                            variant="outline-danger"
-                            onClick={() => handleDelete(exam._id as string)}
-                            size="sm"
-                          >
-                            <BsFillTrashFill />
-                          </Button>
-                        </Col>
-                      </Row>
-                    ) : null}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            {exams.length > 0 ? (
+              <tbody>
+                {exams.map((exam, index) => (
+                  <tr key={exam._id}>
+                    <td>{index + 1}</td>
+                    <td>{exam.name}</td>
+                    <td>{exam.category}</td>
+                    <td>{exam.total}</td>
+                    <td>{exam.correct}</td>
+                    <td>{exam.duration}</td>
+                    <td>
+                      {exam._id ? (
+                        <Row>
+                          <Col lg="2">
+                            <Button
+                              variant="outline-primary"
+                              onClick={() => navigate(`edit/${exam._id}`)}
+                              size="sm"
+                            >
+                              <AiFillEdit />
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button
+                              variant="outline-danger"
+                              onClick={() => handleDelete(exam._id as string)}
+                              size="sm"
+                            >
+                              <BsFillTrashFill />
+                            </Button>
+                          </Col>
+                        </Row>
+                      ) : null}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            ) : null}
           </Table>
         </Row>
+        {exams.length < 1 ? (
+          <p className="text-center h4 mt-5 text-muted">No Data</p>
+        ) : null}
       </Row>
     </Container>
   );

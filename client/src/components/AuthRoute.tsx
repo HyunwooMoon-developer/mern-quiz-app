@@ -1,11 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Col, Container, Nav, Navbar, Offcanvas, Row } from 'react-bootstrap';
-import {
-  AiOutlineHome,
-  AiOutlineProfile,
-  AiOutlineFileText,
-} from 'react-icons/ai';
+import { AiOutlineHome, AiOutlineFileText } from 'react-icons/ai';
 import { RiFileHistoryFill, RiLogoutBoxRLine } from 'react-icons/ri';
 import { setUser } from '../redux/userSlice';
 import { getUser } from '../services/user';
@@ -26,11 +22,6 @@ const userMenu: {
     label: 'Reports',
     path: '/user/report',
     icon: <RiFileHistoryFill />,
-  },
-  {
-    label: 'Profile',
-    path: '/profile',
-    icon: <AiOutlineProfile />,
   },
   {
     label: 'Logout',
@@ -58,11 +49,6 @@ const adminMenu: {
     label: 'Reports',
     path: '/admin/report',
     icon: <RiFileHistoryFill />,
-  },
-  {
-    label: 'Profile',
-    path: '/profile',
-    icon: <AiOutlineProfile />,
   },
   {
     label: 'Logout',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Col,
@@ -8,16 +8,23 @@ import {
   Modal,
   Row,
 } from 'react-bootstrap';
-import { QuestionType } from '../types/types';
+import { ExamType, QuestionType } from '../types/types';
+import { addQuestion, updateQuestion } from '../services/question';
 
 const options: ('A' | 'B' | 'C' | 'D')[] = ['A', 'B', 'C', 'D'];
 
 const QuestionModal = ({
   open,
   onClose,
+  exam,
+  questionID,
+  getExistExam,
 }: {
   open: boolean;
   onClose: () => void;
+  exam: ExamType;
+  questionID?: string;
+  getExistExam: () => void;
 }) => {
   const [question, setQuestion] = useState<QuestionType>({
     name: '',
@@ -28,9 +35,41 @@ const QuestionModal = ({
       D: '',
     },
     correctOption: null,
+    exam: exam._id,
   });
 
-  console.log(question);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      let res;
+
+      if (questionID) {
+        res = await updateQuestion({ ...question, _id: questionID });
+      } else {
+        res = await addQuestion(question);
+      }
+
+      if (res.success) {
+        getExistExam();
+        onClose();
+      } else {
+        console.log(res.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    const editData = exam.questions.find(
+      (question) => question._id === questionID
+    );
+
+    if (editData) {
+      setQuestion(editData);
+    }
+  }, [exam.questions, questionID]);
+
   return (
     <Modal
       show={open}
@@ -43,8 +82,8 @@ const QuestionModal = ({
           Craete Question
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form>
+      <Form onSubmit={onSubmit}>
+        <Modal.Body>
           <Form.Group className="mb-3" controlId="question-name">
             <Form.Label>Question</Form.Label>
             <FormControl
@@ -65,15 +104,16 @@ const QuestionModal = ({
           >
             <Form.Label>Correct Answer</Form.Label>
             {options.map((option) => (
-              <Col md="2">
+              <Col md="2" key={option}>
                 <FormCheck
                   key={option}
                   type="radio"
                   label={option}
+                  checked={option === question.correctOption}
                   name="options"
                   required
                   inline
-                  onClick={() =>
+                  onChange={() =>
                     setQuestion({ ...question, correctOption: option })
                   }
                 />
@@ -81,6 +121,7 @@ const QuestionModal = ({
             ))}
           </Form.Group>
           <Row className="mb-3">
+            <p>Options</p>
             <Col md="6">
               <Form.Group as={Row} controlId="option-A">
                 <Form.Label column sm="2">
@@ -164,20 +205,22 @@ const QuestionModal = ({
               </Form.Group>
             </Col>
           </Row>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Row>
-          <Col>
-            <Button variant="outline-success">Submit</Button>
-          </Col>
-          <Col>
-            <Button variant="outline-danger" onClick={onClose}>
-              Close
-            </Button>
-          </Col>
-        </Row>
-      </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Row>
+            <Col>
+              <Button type="submit" variant="outline-success">
+                Submit
+              </Button>
+            </Col>
+            <Col>
+              <Button type="button" variant="outline-danger" onClick={onClose}>
+                Close
+              </Button>
+            </Col>
+          </Row>
+        </Modal.Footer>
+      </Form>
     </Modal>
   );
 };

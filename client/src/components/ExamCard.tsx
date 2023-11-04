@@ -8,8 +8,13 @@ import {
   Row,
 } from 'react-bootstrap';
 import { ExamType } from '../types/types';
+import { useAppSelector } from '../redux/hooks';
+import { useNavigate } from 'react-router-dom';
 
 const ExamCard = ({ exam }: { exam: ExamType }) => {
+  const { user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+
   return (
     <Col key={exam._id} md={4} className="mb-3 text-center">
       <Card className="card-size">
@@ -32,9 +37,23 @@ const ExamCard = ({ exam }: { exam: ExamType }) => {
               <Col>{exam.duration} seconds</Col>
             </Row>
             <Row className="mt-3">
-              <Button variant="outline-success" className="p-3 exam-button">
-                Start Exam
-              </Button>
+              {user && user.isAdmin ? (
+                <Button
+                  variant="outline-success"
+                  className="p-3 exam-button"
+                  onClick={() => navigate(`/admin/exam/edit/${exam._id}`)}
+                >
+                  Edit Exam
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-success"
+                  className="p-3 exam-button"
+                  onClick={() => navigate(`/user/exam/instruction/${exam._id}`)}
+                >
+                  Start Exam
+                </Button>
+              )}
             </Row>
           </Row>
         </CardBody>

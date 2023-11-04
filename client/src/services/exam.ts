@@ -34,9 +34,9 @@ const addExam = async (payload: ExamType) => {
   }
 };
 
-const updateExam = async (payload: any) => {
+const updateExam = async (payload: ExamType) => {
   try {
-    const res = await instance.put(`${basePath}/${payload.id}`, payload);
+    const res = await instance.put(`${basePath}/${payload._id}`, payload);
 
     return res.data;
   } catch (err: any) {

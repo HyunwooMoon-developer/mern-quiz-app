@@ -6,6 +6,7 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { ExamType } from '../types/types';
 import { deleteQuestion } from '../services/question';
 import QuestionModal from './QuestionModal';
+import QuestionDeleteModal from './QuestionDelteModal';
 
 const columns = ['#', 'Name', 'Options', 'Correct Options', 'Actions'];
 
@@ -17,19 +18,45 @@ const QuestionTable = ({
   getExistExam: () => void;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [questionID, setQuestionID] = useState<string>('');
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
-  const onDeleteQuestion = async (question: any) => {
+  const onDeleteQuestion = async () => {
     try {
-      const res = await deleteQuestion(question);
+      if (!questionID) return null;
+
+      const res = await deleteQuestion(questionID, exam._id as string);
 
       if (res.success) {
         getExistExam();
+        setOpenDeleteModal(false);
       } else {
         console.log(res.message);
       }
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const editQuestion = (id: string) => {
+    setQuestionID(id);
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setQuestionID('');
+    setOpenModal(false);
+  };
+
+  const openDelete = (questionID: string) => {
+    setQuestionID(questionID);
+
+    setOpenDeleteModal(true);
+  };
+
+  const closeDelete = () => {
+    setQuestionID('');
+    setOpenDeleteModal(false);
   };
 
   return (
@@ -50,16 +77,13 @@ const QuestionTable = ({
                   <td>{index + 1}</td>
                   <td>{question.name}</td>
                   <td>
-                    {question.options.A}
-                    <br />
-                    {question.options.B}
-                    <br />
-                    {question.options.C}
-                    <br />
-                    {question.options.D}
+                    A : {question.options.A}
+                    <br />B : {question.options.B}
+                    <br />C : {question.options.C}
+                    <br />D : {question.options.D}
                   </td>
                   <td>
-                    {question.correctOption}{' '}
+                    {question.correctOption} :{' '}
                     {question.correctOption
                       ? question.options[question.correctOption]
                       : null}
@@ -70,7 +94,7 @@ const QuestionTable = ({
                         <Col lg="2">
                           <Button
                             variant="outline-primary"
-                            onClick={() => console.log('edit')}
+                            onClick={() => editQuestion(question._id as string)}
                             size="sm"
                           >
                             <AiFillEdit />
@@ -79,7 +103,7 @@ const QuestionTable = ({
                         <Col>
                           <Button
                             variant="outline-danger"
-                            onClick={() => console.log('delete')}
+                            onClick={() => openDelete(question._id as string)}
                             size="sm"
                           >
                             <BsFillTrashFill />
@@ -94,7 +118,7 @@ const QuestionTable = ({
           ) : null}
         </Table>
       </Row>
-      {exam.questions.length < exam.duration ? (
+      {exam.questions.length < exam.total ? (
         <Button
           variant="outline-primary"
           size="sm"
@@ -107,8 +131,21 @@ const QuestionTable = ({
       {exam.questions.length < 1 ? (
         <p className="text-center h4 mt-5 text-muted">No Data</p>
       ) : null}
-      {openModal ? (
-        <QuestionModal open={openModal} onClose={() => setOpenModal(false)} />
+      {openModal && exam._id ? (
+        <QuestionModal
+          open={openModal}
+          onClose={onCloseModal}
+          exam={exam}
+          questionID={questionID}
+          getExistExam={getExistExam}
+        />
+      ) : null}
+      {openDeleteModal ? (
+        <QuestionDeleteModal
+          open={openDeleteModal}
+          onClose={closeDelete}
+          onDelete={onDeleteQuestion}
+        />
       ) : null}
     </Container>
   );

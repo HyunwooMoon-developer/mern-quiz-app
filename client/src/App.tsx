@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import ExamList from './pages/Admin/Exam/ExamList';
 import SetExam from './pages/Admin/Exam/SetExam';
 import NotFound from './pages/NotFound';
+import ReportList from './pages/Admin/Report/ReportList';
 
 const App = () => {
   return (
@@ -26,7 +27,8 @@ const App = () => {
               key={index}
             />
           ))}
-          <Route path="/admin/exam/add" element={<SetExam />} />
+          <Route path="/admin/report" element={<ReportList />} />
+          {/* User */}
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
