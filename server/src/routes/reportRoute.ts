@@ -14,19 +14,14 @@ router
     try {
       const { exam, user } = req.body;
 
-      const exams = await Exam.find({
-        name: {
-          $regex: exam,
-        },
-      });
+      const filterExam = exam ? { name: { $regex: exam } } : {};
+      const filterUser = user ? { name: { $regex: user } } : {};
+
+      const exams = await Exam.find(filterExam);
 
       const examIds = exams.map((exam) => exam._id);
 
-      const users = await User.find({
-        name: {
-          $regex: user,
-        },
-      });
+      const users = await User.find(filterUser);
 
       const userIds = users.map((user) => user._id);
 

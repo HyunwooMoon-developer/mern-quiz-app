@@ -14,9 +14,9 @@ router
 
     const question = await newQuestion.save();
 
-    const exam = await Exam.findById(req.body.examID);
+    const exam = await Exam.findById(req.body.exam);
     if (exam) {
-      exam?.questions.push(question.id);
+      exam?.questions.push(question._id);
 
       await exam.save();
     }
@@ -43,6 +43,7 @@ router
 
       res.send({
         message: 'Question updated successfully',
+        success: true,
       });
     } catch (err: any) {
       sendError(res, err);
@@ -58,7 +59,7 @@ router
 
       if (exam) {
         exam.questions = exam?.questions.filter(
-          (question: any) => question._id != req.body.questionID
+          (question: any) => question._id != id
         );
 
         await exam.save();
