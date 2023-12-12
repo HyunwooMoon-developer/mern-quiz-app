@@ -71,3 +71,12 @@
 }
 
 /* Exam */
+
+.timer {
+  background-color: #894114;
+  color: white !important;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

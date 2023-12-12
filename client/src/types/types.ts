@@ -31,12 +31,19 @@ export type ExamType = {
 export type QuestionType = {
   _id?: string;
   name: string;
-  options: {
-    A: string;
-    B: string;
-    C: string;
-    D: string;
-  };
+  options: { [key: string]: string };
   correctOption: 'A' | 'B' | 'C' | 'D' | null;
   exam?: string;
+};
+
+export type ReportType = {
+  _id: string;
+  createdAt: string;
+  exam: ExamType;
+  user: UserType;
+  result: {
+    answers: string[];
+    correct: number;
+    pass: boolean;
+  };
 };

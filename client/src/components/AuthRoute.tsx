@@ -72,6 +72,8 @@ const AuthRoute = () => {
         dispatch(setUser(res.data));
       } else {
         console.log(res.message);
+        localStorage.removeItem('quizToken');
+        navigate('/login');
       }
     } catch (err: any) {
       navigate('/login');

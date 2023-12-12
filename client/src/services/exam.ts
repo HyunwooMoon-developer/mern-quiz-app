@@ -26,7 +26,7 @@ const getExam = async (id: string) => {
 const addExam = async (payload: ExamType) => {
   console.log(payload);
   try {
-    const res = await instance.post(`${basePath}/`, payload);
+    const res = await instance.post(`${basePath}`, payload);
 
     return res.data;
   } catch (err: any) {

@@ -8,7 +8,10 @@ import Home from './pages/Home';
 import ExamList from './pages/Admin/Exam/ExamList';
 import SetExam from './pages/Admin/Exam/SetExam';
 import NotFound from './pages/NotFound';
-import ReportList from './pages/Admin/Report/ReportList';
+import AdminReport from './pages/Admin/Report/AdminReport';
+import ExamInstruction from './pages/User/Exam/ExamInstruction';
+import ExamQuestions from './pages/User/Exam/ExamQuestions';
+import UserReport from './pages/User/Report/UserReport';
 
 const App = () => {
   return (
@@ -27,8 +30,14 @@ const App = () => {
               key={index}
             />
           ))}
-          <Route path="/admin/report" element={<ReportList />} />
+          <Route path="/admin/report" element={<AdminReport />} />
           {/* User */}
+          <Route
+            path="/user/exam/instruction/:id"
+            element={<ExamInstruction />}
+          />
+          <Route path="/user/exam/questions/:id" element={<ExamQuestions />} />
+          <Route path="/user/report" element={<UserReport />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

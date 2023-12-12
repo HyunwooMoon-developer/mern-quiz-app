@@ -47,9 +47,14 @@ const ExamCard = ({ exam }: { exam: ExamType }) => {
                 </Button>
               ) : (
                 <Button
-                  variant="outline-success"
+                  variant={
+                    exam.total === exam.questions.length
+                      ? 'outline-success'
+                      : 'secondary'
+                  }
                   className="p-3 exam-button"
                   onClick={() => navigate(`/user/exam/instruction/${exam._id}`)}
+                  disabled={exam.total !== exam.questions.length}
                 >
                   Start Exam
                 </Button>

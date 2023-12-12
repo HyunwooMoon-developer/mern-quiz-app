@@ -17,57 +17,6 @@ const columns = [
   'Actions',
 ];
 
-/* const sampleExams = [
-  {
-    _id: '1',
-    name: 'React Test',
-    category: 'React',
-    total: 5,
-    correct: 2,
-    duration: 60,
-  },
-  {
-    _id: '2',
-    name: 'TypeScript Test',
-    category: 'TypeScript',
-    total: 5,
-    correct: 3,
-    duration: 60,
-  },
-  {
-    _id: '3',
-    name: 'Node Test',
-    category: 'Node',
-    total: 5,
-    correct: 4,
-    duration: 60,
-  },
-  {
-    _id: '4',
-    name: 'MongoDB Test',
-    categoy: 'MongoDB',
-    total: 5,
-    correct: 1,
-    duration: 60,
-  },
-  {
-    _id: '5',
-    name: 'ABC Test',
-    category: 'ABC',
-    total: 5,
-    correct: 1,
-    duration: 60,
-  },
-  {
-    _id: '6',
-    name: 'Test 123',
-    category: '123',
-    total: 5,
-    correct: 5,
-    duration: 60,
-  },
-]; */
-
 const ExamList = () => {
   const [exams, setExams] = useState<ExamType[]>([]);
 

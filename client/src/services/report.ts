@@ -2,18 +2,18 @@ import instance from './instance';
 
 const basePath = '/api/report';
 
-const getReports = async (payload: any) => {
+const getReports = async (filter: any) => {
   try {
-    const res = await instance.get(`${basePath}`, payload);
+    const res = await instance.get(`${basePath}`, { params: filter });
     return res.data;
   } catch (err: any) {
     return err.response.data;
   }
 };
 
-const getReportsByUser = async () => {
+const getReportsByUser = async (id: string) => {
   try {
-    const res = await instance.post(`${basePath}`);
+    const res = await instance.get(`${basePath}/${id}`);
 
     return res.data;
   } catch (err: any) {
