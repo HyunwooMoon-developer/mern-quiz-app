@@ -12,10 +12,22 @@ router
   .all(checkAuth)
   .get(async (req: Request, res: Response) => {
     try {
-      const { exam, user } = req.body;
+      const { exam, user } = req.query;
 
-      const filterExam = exam ? { name: { $regex: exam } } : {};
-      const filterUser = user ? { name: { $regex: user } } : {};
+      const filterExam = exam
+        ? { name: { $regex: new RegExp(exam as string, 'i') } }
+        : {};
+      const filterUser = user
+        ? {
+            $expr: {
+              $regexMatch: {
+                input: { $concat: ['$fname', ' ', '$lname'] },
+                regex: user,
+                options: 'i',
+              },
+            },
+          }
+        : {};
 
       const exams = await Exam.find(filterExam);
 
@@ -54,6 +66,7 @@ router
 
       res.send({
         message: 'Report added successfully',
+        data: { id: newReport._id },
         success: true,
       });
     } catch (err: any) {
@@ -65,8 +78,10 @@ router
   .route('/:user_id')
   .all(checkAuth)
   .get(async (req: Request, res: Response) => {
+    const id = req.params.user_id;
+
     try {
-      const reports = await Report.find({ user: req.body.userID })
+      const reports = await Report.find({ user: id })
         .populate('exam')
         .populate('user')
         .sort({ createdAt: -1 });

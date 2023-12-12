@@ -7,7 +7,7 @@ import examRoute from './routes/examRoute.js';
 import questionRoute from './routes/questionRoute.js';
 import reportRoute from './routes/reportRoute.js';
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 dotenv.config();
 
